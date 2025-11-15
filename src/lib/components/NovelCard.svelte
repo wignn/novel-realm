@@ -5,19 +5,35 @@
 
 	interface NovelCardProps {
 		novel: Novel;
+		priority?: boolean; // Flag untuk LCP image (first few cards)
 	}
 
-	let { novel }: NovelCardProps = $props();
+	let { novel, priority = false }: NovelCardProps = $props();
+	
+	// Generate responsive image URLs dengan parameter query untuk resize
+	function getResponsiveImageUrl(url: string, width: number): string {
+		// Jika CDN support query params untuk resize, gunakan ini
+		// Contoh: ?w=300&q=80 (width=300, quality=80)
+		return `${url}?w=${width}&q=75`;
+	}
 </script>
 
 <article class="group overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-	<!-- Cover Image -->
+	<!-- Cover Image with aspect ratio to prevent layout shift -->
 	<div class="relative aspect-3/4 overflow-hidden bg-slate-200">
 		<img
-			src={novel.cover}
+			src={getResponsiveImageUrl(novel.cover, 400)}
+			srcset="{getResponsiveImageUrl(novel.cover, 300)} 300w, 
+			        {getResponsiveImageUrl(novel.cover, 400)} 400w,
+			        {getResponsiveImageUrl(novel.cover, 600)} 600w"
+			sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
 			alt={novel.title}
 			class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-			loading="lazy"
+			loading={priority ? 'eager' : 'lazy'}
+			fetchpriority={priority ? 'high' : 'auto'}
+			decoding="async"
+			width="400"
+			height="533"
 		/>
 		<div class="absolute top-2 right-2 flex gap-2">
 			{#if novel.popular}

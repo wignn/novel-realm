@@ -4,8 +4,8 @@
 	import { NovelService } from '$lib/services/novelService';
 	import Header from '$lib/components/Header.svelte';
 	import NovelGrid from '$lib/components/NovelGrid.svelte';
+	import NovelGridSkeleton from '$lib/components/NovelGridSkeleton.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
-	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 	import ErrorMessage from '$lib/components/ErrorMessage.svelte';
 	import EmptyState from '$lib/components/EmptyState.svelte';
 	import Footer from '$lib/components/Footer.svelte';
@@ -49,6 +49,20 @@
 <svelte:head>
 	<title>Novel Collection - Discover Amazing Stories</title>
 	<meta name="description" content="Browse our collection of novels from various languages and genres" />
+	
+	<!-- Preconnect to CDN untuk faster image loading -->
+	<link rel="preconnect" href="https://cdn.othinus.cloud" />
+	<link rel="dns-prefetch" href="https://cdn.othinus.cloud" />
+	
+	{#if novels.length > 0 && novels[0]}
+		<!-- Preload LCP image -->
+		<link 
+			rel="preload" 
+			as="image" 
+			href="{novels[0].cover}?w=400&q=75"
+			fetchpriority="high"
+		/>
+	{/if}
 </svelte:head>
 
 <div class="min-h-screen bg-linear-to-br from-slate-50 to-slate-100">
@@ -56,7 +70,7 @@
 
 	<main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 		{#if loading}
-			<LoadingSpinner />
+			<NovelGridSkeleton count={12} />
 		{:else if error}
 			<ErrorMessage message={error} onRetry={handleRetry} />
 		{:else if novels.length === 0}
