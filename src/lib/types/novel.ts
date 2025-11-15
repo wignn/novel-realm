@@ -20,3 +20,17 @@ export interface NovelResponse {
 	total_items: number;
 	total_pages: number;
 }
+
+export interface Chapter {
+	id: string;
+	title: string;
+	chapter_number: number;
+	book_id: string;
+	asset: string | null;
+	created_at: string;
+	updated_at: string;
+}
+
+export interface ChapterResponse {
+	data: Chapter[];
+}

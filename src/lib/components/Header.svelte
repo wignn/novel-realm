@@ -12,7 +12,7 @@
 	<div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
 		<div class="flex items-center justify-between">
 			<div>
-				<h1 class="text-3xl font-bold text-slate-900">Novel Collection</h1>
+				<h1 class="text-3xl font-bold text-slate-900">Wign Novel</h1>
 				<p class="mt-1 text-sm text-slate-600">Discover amazing stories from around the world</p>
 			</div>
 			<div class="hidden sm:block">
