@@ -1,2 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+
+  /* Wign Realm Red Theme - Deep Black */
+  --color-primary: #dc2626;
+  --color-primary-hover: #b91c1c;
+  --color-background: #0a0a0a;
+  --color-foreground: #fafafa;
+  --color-card: #1a1a1a;
+  --color-border: #262626;
+  --color-muted: #171717;
+  --color-muted-foreground: #a1a1aa;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}

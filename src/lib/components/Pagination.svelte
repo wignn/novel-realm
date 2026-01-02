@@ -34,7 +34,7 @@
 			onclick={() => handlePageChange(currentPage - 1)}
 			disabled={currentPage === 1}
 			aria-label="Previous page"
-			class="rounded-lg bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
+			class="rounded-lg bg-card border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground disabled:cursor-not-allowed disabled:opacity-50 shadow-sm"
 		>
 			<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -44,15 +44,16 @@
 		<div class="flex items-center gap-2">
 			{#each visiblePages() as page}
 				{#if page === 'ellipsis'}
-					<span class="px-2 text-slate-500">...</span>
+					<span class="px-2 text-muted-foreground">...</span>
 				{:else}
 					<!-- svelte-ignore a11y_consider_explicit_label -->
 					<button
 						onclick={() => handlePageChange(page)}
-						class="min-w-10 rounded-lg px-4 py-2 text-sm font-medium transition-colors {page === currentPage
-							? 'bg-blue-600 text-white'
-							: 'bg-white text-slate-700 hover:bg-slate-50'}"
+						class="min-w-10 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 {page === currentPage
+							? 'bg-primary text-white shadow-lg'
+							: 'bg-card border border-border hover:bg-accent'}"
 					>
+						{page}
 					</button>
 				{/if}
 			{/each}
@@ -62,7 +63,7 @@
 			onclick={() => handlePageChange(currentPage + 1)}
 			disabled={currentPage === totalPages}
 			aria-label="Next page"
-			class="rounded-lg bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
+			class="rounded-lg bg-card border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground disabled:cursor-not-allowed disabled:opacity-50 shadow-sm"
 		>
 			<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

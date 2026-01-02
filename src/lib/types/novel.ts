@@ -24,9 +24,10 @@ export interface NovelResponse {
 export interface Chapter {
 	id: string;
 	title: string;
-	chapter_number: number;
+	chapter_num: number;
 	book_id: string;
-	asset: string | null;
+	description: string;
+	content: string;
 	created_at: string;
 	updated_at: string;
 }
@@ -34,3 +35,24 @@ export interface Chapter {
 export interface ChapterResponse {
 	data: Chapter[];
 }
+
+export interface SingleChapterResponse {
+	data: Chapter;
+}
+
+export interface Genre {
+	id: string;
+	title: string;
+	description: string;
+	created_at: string;
+	updated_at: string;
+}
+
+export interface GenreResponse {
+	data: Genre[];
+}
+
+export interface SingleGenreResponse {
+	data: Genre;
+}
+
