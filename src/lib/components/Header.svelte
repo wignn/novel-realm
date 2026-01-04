@@ -126,7 +126,7 @@
 			<!-- Desktop Navigation -->
 			<nav class="hidden lg:flex items-center gap-8">
 				<a href="/" class="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">Home</a>
-				<a href="/" class="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">Novels</a>
+				<a href="/novels" class="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">Novels</a>
 			</nav>
 			
 			<!-- Desktop Search & Actions -->
@@ -215,6 +215,10 @@
 								<a href="/bookmarks" class="flex items-center gap-2 px-3 py-2.5 text-sm text-foreground hover:bg-primary/10 transition-colors">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
 									My Bookmarks
+								</a>
+								<a href="/profile" class="flex items-center gap-2 px-3 py-2.5 text-sm text-foreground hover:bg-primary/10 transition-colors">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+									Edit Profile
 								</a>
 								<button 
 									onclick={handleLogout}
@@ -317,7 +321,7 @@
 			<div class="md:hidden py-4 border-t border-border">
 				<nav class="flex flex-col gap-2">
 					<a href="/" class="px-4 py-3 text-base font-medium text-foreground hover:bg-primary/10 rounded-lg transition-colors">Home</a>
-					<a href="/" class="px-4 py-3 text-base font-medium text-foreground hover:bg-primary/10 rounded-lg transition-colors">Novels</a>
+					<a href="/novels" class="px-4 py-3 text-base font-medium text-foreground hover:bg-primary/10 rounded-lg transition-colors">Novels</a>
 				</nav>
 				<div class="mt-4 pt-4 border-t border-border">
 					<a href="/auth/login" class="block w-full text-center rounded-lg bg-primary px-4 py-3 font-medium text-white hover:bg-primary-hover transition-colors">

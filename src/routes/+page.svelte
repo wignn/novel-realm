@@ -24,7 +24,7 @@
 		error = null;
 		
 		try {
-			const data = await NovelService.fetchNovels(page);
+			const data = await NovelService.fetchNovels({ page });
 			novels = data.data;
 			currentPage = data.page;
 			totalPages = data.total_pages;

@@ -214,11 +214,20 @@ export class AuthService {
 
 		const result = await response.json();
 
-		if (result.access_token) {
+		// Tokens are in result.data (backend returns {status, data: {user, access_token, refresh_token}})
+		// For register, backend returns AuthResponseWithoutTokens, but we still check in case tokens are included
+		if (result.data?.access_token) {
+			this.setTokens(result.data.access_token, result.data.refresh_token);
+		} else if (result.access_token) {
 			this.setTokens(result.access_token, result.refresh_token);
 		}
 
-		return result;
+		// Return normalized response with user data
+		return {
+			data: result.data?.user || result.data,
+			access_token: result.data?.access_token || result.access_token,
+			refresh_token: result.data?.refresh_token || result.refresh_token
+		};
 	}
 
 	static async getMe(): Promise<AuthResponse> {

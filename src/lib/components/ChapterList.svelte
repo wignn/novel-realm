@@ -32,49 +32,30 @@
 	</div>
 
 	<!-- Content -->
-	<div class="p-4 sm:p-6">
+	<div class="p-3 sm:p-4">
 		{#if sortedChapters.length === 0}
-			<div class="py-12 sm:py-16 text-center">
-				<div class="mx-auto mb-4 flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-muted">
-					<BookIcon class="h-8 w-8 sm:h-10 sm:w-10" />
+			<div class="py-8 sm:py-12 text-center">
+				<div class="mx-auto mb-3 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-muted">
+					<BookIcon class="h-6 w-6 sm:h-7 sm:w-7" />
 				</div>
-				<h3 class="mb-2 text-base sm:text-lg font-semibold text-foreground">No Chapters Available</h3>
-				<p class="text-sm text-muted-foreground">Chapters haven't been added yet. Check back later!</p>
+				<h3 class="mb-1 text-sm sm:text-base font-semibold text-foreground">No Chapters Available</h3>
+				<p class="text-xs sm:text-sm text-muted-foreground">Chapters haven't been added yet. Check back later!</p>
 			</div>
 		{:else}
-			<div class="grid gap-2 sm:gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+			<div class="grid gap-1.5 sm:gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
 				{#each sortedChapters as chapter (chapter.id)}
 					<a
 						href="/read/{novelId}/{chapter.id}"
-						class="group relative overflow-hidden rounded-lg sm:rounded-xl border-2 border-border bg-card p-3 sm:p-4 transition-all duration-200 hover:border-primary hover:bg-primary/5 hover:shadow-lg hover:shadow-primary/20"
+						class="group relative overflow-hidden rounded-lg border border-border bg-card p-2 sm:p-2.5 transition-all duration-200 hover:border-primary hover:bg-primary/5 hover:shadow-md"
 					>
-						<div class="mb-2 sm:mb-3 flex items-start justify-between gap-1 sm:gap-2">
-							<div class="flex-1">
-								<div class="mb-0.5 sm:mb-1 text-[10px] sm:text-xs font-medium text-muted-foreground">Chapter</div>
-								<div class="text-xl sm:text-2xl font-bold text-primary group-hover:text-primary">
-									{chapter.chapter_num}
-								</div>
-							</div>
-							<svg 
-								class="h-4 w-4 sm:h-5 sm:w-5 shrink-0 text-muted-foreground transition-all group-hover:translate-x-1 group-hover:text-primary" 
-								fill="none" 
-								stroke="currentColor" 
-								viewBox="0 0 24 24"
-							>
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-							</svg>
+						<div class="flex items-center justify-between gap-1 mb-1">
+							<span class="text-[9px] sm:text-[10px] font-medium text-muted-foreground">Ch.</span>
+							<span class="text-sm sm:text-base font-bold text-primary">{chapter.chapter_num}</span>
 						</div>
 						
-						<h3 class="mb-1 sm:mb-2 line-clamp-2 text-xs sm:text-sm font-medium text-foreground/80 group-hover:text-foreground">
+						<h3 class="line-clamp-1 text-[10px] sm:text-xs font-medium text-foreground/70 group-hover:text-foreground">
 							{chapter.title}
 						</h3>
-						
-						<div class="text-[10px] sm:text-xs text-muted-foreground">
-							{new Date(chapter.created_at).toLocaleDateString('en-US', {
-								month: 'short',
-								day: 'numeric'
-							})}
-						</div>
 					</a>
 				{/each}
 			</div>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { NovelService } from '$lib/services/novelService';
-	import type { Novel, Chapter } from '$lib/types/novel';
+	import type { Novel, Chapter, Genre } from '$lib/types/novel';
 	import { goto } from '$app/navigation';
 	import NovelDetailSkeleton from '$lib/components/NovelDetailSkeleton.svelte';
 	import ErrorMessage from '$lib/components/ErrorMessage.svelte';
@@ -15,6 +15,7 @@
 
 	let novel: Novel | null = $state(null);
 	let chapters: Chapter[] = $state([]);
+	let genres: Genre[] = $state([]);
 	let loading: boolean = $state(true);
 	let loadingChapters: boolean = $state(true);
 	let error: string | null = $state(null);
@@ -25,7 +26,7 @@
 		try {
 			const data = await NovelService.fetchNovelById(slug);
 			novel = data.data;
-			await fetchChapters(slug);
+			await Promise.all([fetchChapters(slug), fetchGenres(slug)]);
 		} catch (err) {
 			error = err instanceof Error ? err.message : 'An error occurred';
 		} finally {
@@ -43,6 +44,16 @@
 			chapters = [];
 		} finally {
 			loadingChapters = false;
+		}
+	}
+
+	async function fetchGenres(slug: string) {
+		try {
+			const data = await NovelService.fetchGenresByBook(slug);
+			genres = data.data || [];
+		} catch (err) {
+			console.error('Failed to fetch genres:', err);
+			genres = [];
 		}
 	}
 
@@ -144,6 +155,20 @@
 									</span>
 								{/if}
 							</div>
+							
+							<!-- Genres -->
+							{#if genres.length > 0}
+								<div class="flex flex-wrap justify-center lg:justify-start gap-1.5 mt-3">
+									{#each genres as genre (genre.id)}
+										<a 
+											href="/novels?genres={genre.title.toLowerCase()}"
+											class="rounded-full bg-card border border-border px-2.5 py-0.5 text-xs font-medium text-foreground/80 hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-colors"
+										>
+											{genre.title}
+										</a>
+									{/each}
+								</div>
+							{/if}
 						</div>
 
 						<!-- Stats Cards -->

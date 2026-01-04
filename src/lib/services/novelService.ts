@@ -1,18 +1,33 @@
-import type { NovelResponse, ChapterResponse, SingleChapterResponse } from '$lib/types/novel';
+import type { NovelResponse, ChapterResponse, SingleChapterResponse, GenreResponse } from '$lib/types/novel';
 import { PUBLIC_API_URL, PUBLIC_API_KEY } from '$env/static/public';
+
+export interface FetchNovelsParams {
+	page?: number;
+	search?: string;
+	genres?: string;
+	sort?: 'newest' | 'oldest' | 'popular' | 'alphabetical';
+}
 
 export class NovelService {
 	private static baseUrl = PUBLIC_API_URL;
 	private static apiKey = PUBLIC_API_KEY;
 
-	static async fetchNovels(page: number = 1, search?: string): Promise<NovelResponse> {
+	static async fetchNovels(params: FetchNovelsParams = {}): Promise<NovelResponse> {
 		try {
-			const params = new URLSearchParams({ page: page.toString() });
-			if (search) {
-				params.append('search', search);
+			const urlParams = new URLSearchParams();
+			urlParams.append('page', (params.page || 1).toString());
+
+			if (params.search) {
+				urlParams.append('search', params.search);
+			}
+			if (params.genres) {
+				urlParams.append('genres', params.genres);
+			}
+			if (params.sort) {
+				urlParams.append('sort', params.sort);
 			}
 
-			const response = await fetch(`${this.baseUrl}/api/books?${params.toString()}`, {
+			const response = await fetch(`${this.baseUrl}/api/books?${urlParams.toString()}`, {
 				headers: {
 					'x-api-key': this.apiKey
 				}
@@ -32,7 +47,49 @@ export class NovelService {
 	}
 
 	static async searchNovels(query: string): Promise<NovelResponse> {
-		return this.fetchNovels(1, query);
+		return this.fetchNovels({ page: 1, search: query });
+	}
+
+	static async fetchGenres(): Promise<GenreResponse> {
+		try {
+			const response = await fetch(`${this.baseUrl}/api/genres`, {
+				headers: {
+					'x-api-key': this.apiKey
+				}
+			});
+
+			if (!response.ok) {
+				throw new Error(`Failed to fetch genres: ${response.statusText}`);
+			}
+
+			return await response.json();
+		} catch (error) {
+			if (error instanceof Error) {
+				throw error;
+			}
+			throw new Error('An unexpected error occurred while fetching genres');
+		}
+	}
+
+	static async fetchGenresByBook(bookId: string): Promise<GenreResponse> {
+		try {
+			const response = await fetch(`${this.baseUrl}/api/book/${bookId}/genres`, {
+				headers: {
+					'x-api-key': this.apiKey
+				}
+			});
+
+			if (!response.ok) {
+				throw new Error(`Failed to fetch book genres: ${response.statusText}`);
+			}
+
+			return await response.json();
+		} catch (error) {
+			if (error instanceof Error) {
+				throw error;
+			}
+			throw new Error('An unexpected error occurred while fetching book genres');
+		}
 	}
 
 	static async fetchNovelById(id: string | number): Promise<any> {
