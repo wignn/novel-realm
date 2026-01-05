@@ -294,8 +294,9 @@
 
 <!-- Modal -->
 {#if showModal}
-	<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 overflow-y-auto">
-		<div class="w-full max-w-4xl bg-card border border-border rounded-2xl p-6 my-8">
+	<div class="fixed inset-0 z-50 overflow-y-auto bg-black/60">
+		<div class="min-h-full flex items-start justify-center p-4 py-8">
+		<div class="w-full max-w-4xl bg-card border border-border rounded-2xl p-6">
 			<div class="flex items-center justify-between mb-6">
 				<h2 class="text-xl font-bold text-foreground">{editingChapter ? 'Edit Chapter' : 'Create Chapter'}</h2>
 				<button onclick={closeModal} class="p-2 hover:bg-muted rounded-lg transition-colors">
@@ -340,6 +341,7 @@
 					</button>
 				</div>
 			</form>
+		</div>
 		</div>
 	</div>
 {/if}
