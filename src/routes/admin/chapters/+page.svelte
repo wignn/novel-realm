@@ -343,4 +343,5 @@
 			</form>
 		</div>
 	</div>
+    </div>
 {/if}
